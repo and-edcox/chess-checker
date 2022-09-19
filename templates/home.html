@@ -77,9 +77,19 @@
         <option value="king">King</option>
       </select>
 
-      <input id="start" name="start" placeholder="Start" required>
+      <select id="start" name="start" required>
+        <option value="" disabled selected>Start</option>
+        {% for coord in coords %}
+        <option value="{{ coord }}">{{ coord }}</option>
+        {% endfor %}
+      </select>
 
-      <input id="end" name="end" placeholder="End" required>
+      <select id="end" name="end" required>
+        <option value="" disabled selected>End </option>
+        {% for coord in coords %}
+        <option value="{{ coord }}">{{ coord }}</option>
+        {% endfor %}
+      </select>
 
       <input name="check_move" type="submit">
     </div>

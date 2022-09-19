@@ -1,6 +1,12 @@
 from chess import plot_board, can_move
 from flask import Flask, request, render_template
 
+# Coordinates for html dropdown
+COORDS = []
+for letter in ["A", "B", "C", "D", "E", "F", "G", "H"]:
+    for i in range(8):
+        COORDS.append(f"{letter}{i+1}")
+
 app = Flask(__name__)
 
 
@@ -24,7 +30,9 @@ def home():
 
         board, image_url = plot_board(colour, piece, start, end)
 
-    return render_template("home.html", check_move=move, board=board, url=image_url)
+    return render_template(
+        "home.html", coords=COORDS, check_move=move, board=board, url=image_url
+    )
 
 
 if __name__ == "__main__":
