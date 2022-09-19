@@ -1,34 +1,62 @@
-import matplotlib
+def check_move(colour, piece, start, end) -> bool:
 
-matplotlib.use("Agg")
+    start = convert_coords(start)
+    end = convert_coords(end)
 
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-import os
+    if start == end:
+        return "No move made"
+
+    if piece == "rook" or piece == "queen":
+        if start[0] == end[0] or start[1] == end[1]:
+            return True
+
+    if piece == "bishop" or piece == "queen":
+        if abs(start[0] - end[0]) == abs(start[1] - end[1]):
+            return True
+
+    if piece == "king":
+        if abs(start[0] - end[0]) <= 1 and abs(start[1] - end[1]) <= 1:
+            return True
+
+    if piece == "knight":
+        if sorted([abs(start[0] - end[0]), abs(start[1] - end[1])]) == [1, 2]:
+            return True
+
+    if piece == "pawn":
+        if start[1] in [1, 6]:
+            jump = 2
+        else:
+            jump = 1
+
+        if (colour == "white" and (start[1] - end[1] > 0)) or (
+            colour == "black" and (start[1] - end[1] < 0)
+        ):
+            if start[0] == end[0] and abs(start[1] - end[1]) <= jump:
+                return True
+
+    return False
 
 
-class Board:
-    def __init__(self) -> None:
-        self.board = []
+def plot_board(colour=None, piece=None, start=None, end=None) -> tuple:
 
-        for i in range(8):
-            self.board.append([(x + i + 1) % 2 for x in range(8)])
+    board = []
 
-    def plot_board(self, move=None) -> None:
+    for i in range(8):
+        board.append([(x + i + 1) % 2 for x in range(8)])
 
-        plt.matshow(self.board, cmap=ListedColormap(["k", "w"]))
-        ax = plt.gca()
-        ax.set_xticks([x - 0.5 for x in range(1, 9)], minor=True)
-        ax.set_yticks([y - 0.5 for y in range(1, 9)], minor=True)
-        ax.set_xticklabels([0, "A", "B", "C", "D", "E", "F", "G", "H"])
-        ax.set_yticklabels([0, 8, 7, 6, 5, 4, 3, 2, 1])
-        plt.grid(which="minor", ls="-", lw=2)
-        plt.grid(c="k", lw="0", which="minor")
+    if start and end:
 
-        if not os.path.exists("static/images"):
-            os.mkdir("static/images")
+        start = convert_coords(start)
+        end = convert_coords(end)
+        board[start[1]][start[0]] = 2
+        board[end[1]][end[0]] = 3
 
-        plt.savefig("static/images/board.png", bbox_inches="tight")
+    if colour and piece:
+        image_url = f"./static/images/{colour.lower()}/{piece.lower()}.png"
+    else:
+        image_url = None
+
+    return board, image_url
 
 
 def convert_coords(coord) -> tuple:
@@ -40,21 +68,3 @@ def convert_coords(coord) -> tuple:
     y = 8 - int(coord[1])
 
     return (x, y)
-
-
-def check_move(colour, piece, start, end) -> bool:
-
-    if start == end:
-        return "No move made"
-
-    if start == end:
-        return "No move made"
-
-    start = convert_coords(start)
-    end = convert_coords(end)
-
-    if piece == "Rook":
-        if start[0] == end[0] or start[1] == end[1]:
-            return True
-
-    return False
