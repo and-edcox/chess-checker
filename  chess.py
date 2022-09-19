@@ -14,7 +14,7 @@ class Board:
         for i in range(8):
             self.board.append([(x + i + 1) % 2 for x in range(8)])
 
-    def plot_board(self):
+    def plot_board(self) -> None:
 
         plt.matshow(self.board, cmap=ListedColormap(["k", "w"]))
         ax = plt.gca()
@@ -29,3 +29,17 @@ class Board:
             os.mkdir("static/images")
 
         plt.savefig("static/images/board.png", bbox_inches="tight")
+
+
+def convert_coords(coord) -> tuple:
+    letters = {"A": 0, "B": 1, "C": 2, "D": 3, "E": 4, "F": 5, "G": 6, "H": 7}
+
+    x = letters[coord[0]]
+    y = 8 - coord[1]
+
+    return (x, y)
+
+
+def check_move(piece, start, end) -> bool:
+
+    return True
