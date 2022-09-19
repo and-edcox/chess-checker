@@ -13,6 +13,7 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def home():
 
+    # Initial load of the app
     if request.method == "GET":
 
         move = None
