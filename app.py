@@ -1,7 +1,6 @@
-from chess import Board, check_move
+from chess import plot_board, check_move
 from flask import Flask, request, render_template
 
-BOARD = Board()
 app = Flask(__name__)
 
 
@@ -12,6 +11,8 @@ def home():
 
         move = None
 
+        board, image_url = plot_board()
+
     else:
         colour = request.form.get("colour")
         piece = request.form.get("piece")
@@ -20,11 +21,9 @@ def home():
 
         move = check_move(colour, piece, start, end)
 
-        BOARD.plot_board(move)
+        board, image_url = plot_board(colour, piece, start, end)
 
-    BOARD.plot_board()
-
-    return render_template("home.html", check_move=move, url="/static/images/board.png")
+    return render_template("home.html", check_move=move, board=board, url=image_url)
 
 
 if __name__ == "__main__":
