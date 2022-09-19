@@ -8,5 +8,5 @@ class TestChess(unittest.TestCase):
             can_move(colour="white", piece="rook", start="A8", end="D8"), True
         )
         self.assertEqual(
-            can_move(colour="white", piece="rook", start="A8", end="D7"), False
+            can_move(colour="white", piece="bishop", start="A8", end="D8"), False
         )
