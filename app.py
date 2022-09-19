@@ -1,4 +1,4 @@
-from chess import plot_board, check_move
+from chess import plot_board, can_move
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
@@ -19,7 +19,8 @@ def home():
         start = request.form.get("start")
         end = request.form.get("end")
 
-        move = check_move(colour, piece, start, end)
+        move = can_move(colour, piece, start, end)
+        print(move)
 
         board, image_url = plot_board(colour, piece, start, end)
 
