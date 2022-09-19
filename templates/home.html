@@ -1,5 +1,52 @@
 <head>
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}" />
+  <style>
+    .chess-board {
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+
+    .chess-board th {
+      padding: .5em;
+    }
+
+    .chess-board th+th {
+      border-bottom: 1px solid #000;
+    }
+
+    .chess-board th:first-child,
+    .chess-board td:last-child {
+      border-right: 1px solid #000;
+    }
+
+    .chess-board tr:last-child td {
+      border-bottom: 1px solid;
+    }
+
+    .chess-board th:empty {
+      border: none;
+    }
+
+    .chess-board td {
+      width: 1.5em;
+      height: 1.5em;
+      text-align: center;
+      font-size: 32px;
+      line-height: 0;
+    }
+
+    .chess-board .light {
+      background: white;
+    }
+
+    .chess-board .dark {
+      background: black;
+    }
+
+    .chess-board .moved {
+      background: yellow;
+    }
+  </style>
 </head>
 
 <body>
@@ -8,26 +55,74 @@
       Chess Checker
     </h1>
   </div>
-  {% if check_move %}
+  {% if check_move is sameas true %}
   <h3 style="color:green;">
     Valid Move
   </h3>
-  {% else %}
+  {% endif %}
+  {% if check_move is sameas false %}
   <h3 style="color:red;">
     Invalid Move
   </h3>
   {% endif %}
   <div class="image-container">
-    <img src={{url}}>
+    <table class="chess-board">
+      <tbody>
+        <tr>
+          <th></th>
+          <th>A</th>
+          <th>B</th>
+          <th>C</th>
+          <th>D</th>
+          <th>E</th>
+          <th>F</th>
+          <th>G</th>
+          <th>H</th>
+        </tr>
+        {% for row in board %}
+        <tr>
+          <th>{{ 9 - loop.index }}</th>
+          {% for square in row %}
+          {% if square == 0 %}
+          <td class="dark"></td>
+          {% endif %}
+          {% if square == 1 %}
+          <td class="light"></td>
+          {% endif %}
+          {% if square == 2 %}
+          <td class="moved"></td>
+          {% endif %}
+          {% if square == 3 %}
+          <td class="moved">
+            <img src={{url}} width="40" height="40">
+          </td>
+          {% endif %}
+          {% endfor %}
+        <tr>
+          {% endfor %}
+      </tbody>
+    </table>
   </div>
 </body>
 
 <div class="form">
   <form method="POST">
     <div>
-      <input id="colour" name="colour" placeholder="Colour" required>
+      <select id="colour" name="colour" required>
+        <option value="" disabled selected>Colour</option>
+        <option value="white">White</option>
+        <option value="black">Black</option>
+      </select>
 
-      <input id="piece" name="piece" placeholder="Piece" required>
+      <select id="piece" name="piece" required>
+        <option value="" disabled selected>Piece</option>
+        <option value="pawn">Pawn</option>
+        <option value="rook">Rook</option>
+        <option value="knight">Knight</option>
+        <option value="bishop">Bishop</option>
+        <option value="queen">Queen</option>
+        <option value="king">King</option>
+      </select>
 
       <input id="start" name="start" placeholder="Start" required>
 
