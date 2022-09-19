@@ -7,7 +7,7 @@ def can_move(colour, piece, start, end) -> bool:
     end = convert_coords(end)
 
     if start == end:
-        return "No move made"
+        return False
 
     # Check orthogonal movement
     if piece == "rook" or piece == "queen":
@@ -40,9 +40,15 @@ def can_move(colour, piece, start, end) -> bool:
         if (colour == "white" and (start[1] - end[1] > 0)) or (
             colour == "black" and (start[1] - end[1] < 0)
         ):
-            # Check to see if no lateral movement and allowed forward jump
-            if start[0] == end[0] and abs(start[1] - end[1]) <= jump:
-                return True
+
+            # Check to see if pawn isnt starting in impossible position
+            if (colour == "white" and start[1] <= 6) or (
+                colour == "black" and start[1] >= 1
+            ):
+
+                # Check to see if no lateral movement and allowed forward jump
+                if start[0] == end[0] and abs(start[1] - end[1]) <= jump:
+                    return True
 
     return False
 
