@@ -28,10 +28,16 @@ Then navigate to <http://127.0.0.1:5000> in your browser.
 
 ## How to use
 
-In the UI, select the **Colour, Piece, Start Position and End Position** of your move. If the move is valid, the **can_move** function returns **True**, and you will see the following:
+In the UI, select the **Colour, Piece, Start Position and End Position** of your move, then click **Submit**. If the move is valid, the **can_move** function returns **True**, and you will see the following:
 
 ![alt text](./static/images/example/valid.png)
 
 If the move is invalid, the **can_move** function returns **False**, and you will see this instead:
 
 ![alt text](./static/images/example/invalid.png)
+
+## Unit Tests
+
+The included unit test is configured to test the output of our function based on a known valid and invalid move. To run the included unit test, execute the following from the main directory
+
+```python test_chess.py```
