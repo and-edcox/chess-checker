@@ -30,8 +30,10 @@ def can_move(colour, piece, start, end) -> bool:
             return True
 
     if piece == "pawn":
-        # Check to see if pawn on starting spot and allow double move
-        if start[1] in [1, 6]:
+        # Check to see if pawn on colour's starting spot and allow double move
+        if (colour == "white" and start[1] == 6) or (
+            colour == "black" and start[1] == 1
+        ):
             jump = 2
         else:
             jump = 1
