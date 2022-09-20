@@ -10,3 +10,7 @@ class TestChess(unittest.TestCase):
         self.assertEqual(
             can_move(colour="white", piece="bishop", start="A8", end="D8"), False
         )
+
+
+if __name__ == "__main__":
+    unittest.main()
